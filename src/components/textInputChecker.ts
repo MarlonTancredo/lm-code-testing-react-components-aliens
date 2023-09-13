@@ -1,32 +1,53 @@
-const specialChars = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+const specialCharList = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
+const messages = {
+  moreThenTwoChar: "You must enter more than 2 characters!",
+  moreThenTwentyThree: "You must enter less than 23 characters!",
+  moreThenOneChar: "You must enter more than 1 characters!",
+  moreThenFortyNine: "You must enter less than 49 characters!",
+  numberChar: "Your answer must not have numbers!",
+  specialChar: "Your answer must not have special characters!",
+  justNumber: "You only can use numbers",
+  biggestNumber: "Must be at least 1,000,000,000.",
+};
+const {
+  moreThenTwoChar,
+  moreThenTwentyThree,
+  moreThenOneChar,
+  moreThenFortyNine,
+  numberChar,
+  specialChar,
+  justNumber,
+  biggestNumber,
+} = messages;
 
 export const checkSpecieNameField = (value: string) => {
   if (value.length < 3) {
-    return "You must enter more than 2 characters!";
+    return moreThenTwoChar;
   }
   if (value.length > 23) {
-    return "You must enter less than 23 characters!";
+    return moreThenTwentyThree;
   }
   const values = value.split("").map((element) => {
     return !isNaN(parseInt(element));
   });
   if (values.includes(true)) {
-    return "Your answer must not have numbers!";
+    return numberChar;
   }
-  if (specialChars.test(value)) {
-    return "Your answer must not have special characters!";
+  if (specialCharList.test(value)) {
+    return specialChar;
   }
 };
 
 export const checkPlanetNameField = (value: string) => {
   if (value.length < 2) {
-    return "You must enter more than 1 characters!";
+    return moreThenOneChar;
   }
   if (value.length > 49) {
-    return "You must enter less than 49 characters!";
+    return moreThenFortyNine;
   }
-  if (specialChars.test(value)) {
-    return "Your answer must not have special characters!";
+  if (specialCharList.test(value)) {
+    return specialChar;
   }
 };
 
@@ -35,9 +56,9 @@ export const checkNumberOfBeingField = (value: string) => {
     return isNaN(parseInt(element));
   });
   if (values.includes(true)) {
-    return "You only can use numbers";
+    return justNumber;
   }
   if (parseInt(value) < 1000000000) {
-    return "Must be at least 1,000,000,000.";
+    return biggestNumber;
   }
 };
