@@ -18,7 +18,7 @@ export interface FormFields {
 	question: string | null;
 	textArea: string | null;
 	isButtonDisabled: boolean
-	errorMessage: string
+	errorMessage: unknown
 }
 
 const formFields: FormFields = {
@@ -59,38 +59,14 @@ const W12MForm = () => {
 				errorMessage: ""
 			})
 		} catch ({ message }: any) {
-			if (message === "You must enter more than 2 characters!") {
-				setFormState({
-					...formState,
-					specieName: value,
-					isButtonDisabled: true,
-					errorMessage: message
-				})
-			} if (message === "You must enter less than 23 characters!") {
-				setFormState({
-					...formState,
-					specieName: value,
-					isButtonDisabled: true,
-					errorMessage: message
-				})
-			} if (message === "Your answer must not enter special characters!") {
-				setFormState({
-					...formState,
-					specieName: value,
-					isButtonDisabled: true,
-					errorMessage: message
-				})
-			} if (message === "Your answer must not enter numbers!") {
-				setFormState({
-					...formState,
-					specieName: value,
-					isButtonDisabled: true,
-					errorMessage: message
-				})
-			};
+			setFormState({
+				...formState,
+				specieName: value,
+				isButtonDisabled: true,
+				errorMessage: message
+			})
 		}
 	}
-
 
 	const handlePlanetName = (value: string) => {
 		try {
@@ -102,28 +78,12 @@ const W12MForm = () => {
 				errorMessage: ""
 			})
 		} catch ({ message }: any) {
-			if (message === "You must enter more than 1 characters!") {
-				setFormState({
-					...formState,
-					planetName: value,
-					isButtonDisabled: true,
-					errorMessage: message
-				})
-			} if (message === "You must enter less than 49 characters!") {
-				setFormState({
-					...formState,
-					planetName: value,
-					isButtonDisabled: true,
-					errorMessage: message
-				})
-			} if (message === "Your answer must not enter special characters!") {
-				setFormState({
-					...formState,
-					planetName: value,
-					isButtonDisabled: true,
-					errorMessage: message,
-				})
-			}
+			setFormState({
+				...formState,
+				planetName: value,
+				isButtonDisabled: true,
+				errorMessage: message
+			})
 		}
 	}
 
@@ -137,22 +97,12 @@ const W12MForm = () => {
 				errorMessage: "",
 			});
 		} catch ({ message }: any) {
-			if (message === "You must enter only numbers") {
-				setFormState({
-					...formState,
-					numberOfBeings: value,
-					isButtonDisabled: true,
-					errorMessage: message,
-				});
-			}
-			if (message === "Your number must be bigger than 1.000.000.000") {
-				setFormState({
-					...formState,
-					numberOfBeings: value,
-					isButtonDisabled: true,
-					errorMessage: message,
-				});
-			}
+			setFormState({
+				...formState,
+				numberOfBeings: value,
+				isButtonDisabled: true,
+				errorMessage: message,
+			});
 		}
 	}
 
