@@ -50,15 +50,110 @@ const W12MForm = () => {
 	};
 
 	const handleSpecieName = (value: string) => {
-		setFormState(checkSpecieNameField(value, formState))
+		try {
+			checkSpecieNameField(value)
+			setFormState({
+				...formState,
+				specieName: value,
+				isButtonDisabled: false,
+				errorMessage: ""
+			})
+		} catch ({ message }: any) {
+			if (message === "You must enter more than 2 characters!") {
+				setFormState({
+					...formState,
+					specieName: value,
+					isButtonDisabled: true,
+					errorMessage: message
+				})
+			} if (message === "You must enter less than 23 characters!") {
+				setFormState({
+					...formState,
+					specieName: value,
+					isButtonDisabled: true,
+					errorMessage: message
+				})
+			} if (message === "Your answer must not enter special characters!") {
+				setFormState({
+					...formState,
+					specieName: value,
+					isButtonDisabled: true,
+					errorMessage: message
+				})
+			} if (message === "Your answer must not enter numbers!") {
+				setFormState({
+					...formState,
+					specieName: value,
+					isButtonDisabled: true,
+					errorMessage: message
+				})
+			};
+		}
 	}
 
+
 	const handlePlanetName = (value: string) => {
-		setFormState(checkPlanetNameField(value, formState))
+		try {
+			checkPlanetNameField(value)
+			setFormState({
+				...formState,
+				planetName: value,
+				isButtonDisabled: false,
+				errorMessage: ""
+			})
+		} catch ({ message }: any) {
+			if (message === "You must enter more than 1 characters!") {
+				setFormState({
+					...formState,
+					planetName: value,
+					isButtonDisabled: true,
+					errorMessage: message
+				})
+			} if (message === "You must enter less than 49 characters!") {
+				setFormState({
+					...formState,
+					planetName: value,
+					isButtonDisabled: true,
+					errorMessage: message
+				})
+			} if (message === "Your answer must not enter special characters!") {
+				setFormState({
+					...formState,
+					planetName: value,
+					isButtonDisabled: true,
+					errorMessage: message,
+				})
+			}
+		}
 	}
 
 	const handleNumberOfBeingField = (value: string) => {
-		setFormState(checkNumberOfBeingField(value, formState))
+		try {
+			checkNumberOfBeingField(value)
+			setFormState({
+				...formState,
+				numberOfBeings: value,
+				isButtonDisabled: true,
+				errorMessage: "",
+			});
+		} catch ({ message }: any) {
+			if (message === "You must enter only numbers") {
+				setFormState({
+					...formState,
+					numberOfBeings: value,
+					isButtonDisabled: true,
+					errorMessage: message,
+				});
+			}
+			if (message === "Your number must be bigger than 1.000.000.000") {
+				setFormState({
+					...formState,
+					numberOfBeings: value,
+					isButtonDisabled: true,
+					errorMessage: message,
+				});
+			}
+		}
 	}
 
 	return (
@@ -76,17 +171,17 @@ const W12MForm = () => {
 				<TextInput
 					label={specieLabel}
 					value={specieName}
-					onChangeInput={(value) => handleSpecieName(value)}
+					onChangeInput={handleSpecieName}
 				/>
 				<TextInput
 					label={planetLabel}
 					value={planetName}
-					onChangeInput={(value) => handlePlanetName(value)}
+					onChangeInput={handlePlanetName}
 				/>
 				<TextInput
 					label={beingsQtyLabel}
 					value={numberOfBeings}
-					onChangeInput={(value) => handleNumberOfBeingField(value)}
+					onChangeInput={handleNumberOfBeingField}
 				/>
 				<SelectInput
 					label={questionLabel}
