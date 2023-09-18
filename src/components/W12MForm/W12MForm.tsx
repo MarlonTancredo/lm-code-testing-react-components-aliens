@@ -17,9 +17,18 @@ export interface FormFields {
 	question: string | null;
 	textArea: string | null;
 	isButtonDisabled: boolean
-	specieErrorMessage: unknown
-	planetErrorMessage: unknown
+}
+
+interface ErrorMessages {
+	specieErrorMessage: unknown,
+	planetErrorMessage: unknown,
 	beingErrorMessage: unknown
+}
+
+interface FieldStatus {
+	specieFieldStatus: boolean;
+	planetFieldStatus: boolean;
+	numberOfBeingsStatus: boolean
 }
 
 const formFields: FormFields = {
@@ -29,10 +38,19 @@ const formFields: FormFields = {
 	question: "",
 	textArea: "",
 	isButtonDisabled: true,
+};
+
+const errorMessages: ErrorMessages = {
 	specieErrorMessage: "",
 	planetErrorMessage: "",
 	beingErrorMessage: ""
-};
+}
+
+const fieldStatus: FieldStatus = {
+	specieFieldStatus: true,
+	planetFieldStatus: true,
+	numberOfBeingsStatus: true
+}
 
 const labelNames = {
 	specieLabel: "Specie Name:",
@@ -45,19 +63,23 @@ const { specieLabel, planetLabel, beingsQtyLabel, questionLabel, sparingReasonLa
 
 const W12MForm = () => {
 	const [formState, setFormState] = useState(formFields);
-	const {
-		specieName,
-		planetName,
-		numberOfBeings,
-		isButtonDisabled,
-		specieErrorMessage,
-		planetErrorMessage,
-		beingErrorMessage } = formState;
+	const [messages, setMessages] = useState(errorMessages)
+	const [fieldStatusState, setFieldStatusState] = useState(fieldStatus)
+
+	const { specieName, planetName, numberOfBeings } = formState;
+	const { specieErrorMessage, planetErrorMessage, beingErrorMessage } = messages
 
 	const handleSubmit = (event: { preventDefault: () => void }) => {
 		event.preventDefault();
 		console.log(formState);
 	};
+
+	const handleIsButtonDisabled = () => {
+		const values = Object.values(fieldStatusState).map((value) => value)
+		const isFalseIncluded = values.includes(true)
+		return isFalseIncluded
+	}
+
 
 	const handleSpecieName = (value: string) => {
 		try {
@@ -65,16 +87,18 @@ const W12MForm = () => {
 			setFormState({
 				...formState,
 				specieName: value,
-				isButtonDisabled: false,
-				specieErrorMessage: ""
+				isButtonDisabled: false
 			})
+			setMessages({ ...messages, specieErrorMessage: "" })
+			setFieldStatusState({ ...fieldStatusState, specieFieldStatus: false, })
 		} catch ({ message }: any) {
 			setFormState({
 				...formState,
 				specieName: value,
-				isButtonDisabled: true,
-				specieErrorMessage: message
+				isButtonDisabled: true
 			})
+			setMessages({ ...messages, specieErrorMessage: message })
+			setFieldStatusState({ ...fieldStatusState, specieFieldStatus: true })
 		}
 	}
 
@@ -84,16 +108,18 @@ const W12MForm = () => {
 			setFormState({
 				...formState,
 				planetName: value,
-				isButtonDisabled: false,
-				planetErrorMessage: ""
+				isButtonDisabled: false
 			})
+			setMessages({ ...messages, planetErrorMessage: "" })
+			setFieldStatusState({ ...fieldStatusState, planetFieldStatus: false })
 		} catch ({ message }: any) {
 			setFormState({
 				...formState,
 				planetName: value,
-				isButtonDisabled: true,
-				planetErrorMessage: message
+				isButtonDisabled: true
 			})
+			setMessages({ ...messages, planetErrorMessage: message })
+			setFieldStatusState({ ...fieldStatusState, planetFieldStatus: true })
 		}
 	}
 
@@ -103,16 +129,19 @@ const W12MForm = () => {
 			setFormState({
 				...formState,
 				numberOfBeings: value,
-				isButtonDisabled: true,
-				beingErrorMessage: "",
+				isButtonDisabled: false
 			});
+			setMessages({ ...messages, beingErrorMessage: "", })
+			setFieldStatusState({ ...fieldStatusState, numberOfBeingsStatus: false })
 		} catch ({ message }: any) {
+
 			setFormState({
 				...formState,
 				numberOfBeings: value,
-				isButtonDisabled: true,
-				beingErrorMessage: message,
+				isButtonDisabled: true
 			});
+			setMessages({ ...messages, beingErrorMessage: message, })
+			setFieldStatusState({ ...fieldStatusState, numberOfBeingsStatus: true })
 		}
 	}
 
@@ -158,7 +187,7 @@ const W12MForm = () => {
 						setFormState({ ...formState, textArea: value })
 					}
 				/>
-				<SubmitButton isDisable={isButtonDisabled} />
+				<SubmitButton isDisable={handleIsButtonDisabled()} />
 			</form>
 		</section>
 	);

@@ -15,5 +15,6 @@ describe("TextInput component", () => {
         const field = screen.getByLabelText("test")
 
         expect(field).toBeInTheDocument()
+
     })
 })
