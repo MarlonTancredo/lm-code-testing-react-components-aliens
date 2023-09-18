@@ -4,7 +4,6 @@ import TextInput from "../text_input/TextInput";
 import SelectInput from "../select_input/SelectInput";
 import TextAreaInput from "../text_area_input/TextAreaInput";
 import SubmitButton from "../submit_button/SubmitButton";
-import ErrorMessage from "../error_message/ErrorMessage";
 import {
 	checkSpecieNameField,
 	checkPlanetNameField,
@@ -18,7 +17,9 @@ export interface FormFields {
 	question: string | null;
 	textArea: string | null;
 	isButtonDisabled: boolean
-	errorMessage: unknown
+	specieErrorMessage: unknown
+	planetErrorMessage: unknown
+	beingErrorMessage: unknown
 }
 
 const formFields: FormFields = {
@@ -28,7 +29,9 @@ const formFields: FormFields = {
 	question: "",
 	textArea: "",
 	isButtonDisabled: true,
-	errorMessage: ""
+	specieErrorMessage: "",
+	planetErrorMessage: "",
+	beingErrorMessage: ""
 };
 
 const labelNames = {
@@ -42,7 +45,14 @@ const { specieLabel, planetLabel, beingsQtyLabel, questionLabel, sparingReasonLa
 
 const W12MForm = () => {
 	const [formState, setFormState] = useState(formFields);
-	const { specieName, planetName, numberOfBeings, isButtonDisabled, errorMessage } = formState;
+	const {
+		specieName,
+		planetName,
+		numberOfBeings,
+		isButtonDisabled,
+		specieErrorMessage,
+		planetErrorMessage,
+		beingErrorMessage } = formState;
 
 	const handleSubmit = (event: { preventDefault: () => void }) => {
 		event.preventDefault();
@@ -56,14 +66,14 @@ const W12MForm = () => {
 				...formState,
 				specieName: value,
 				isButtonDisabled: false,
-				errorMessage: ""
+				specieErrorMessage: ""
 			})
 		} catch ({ message }: any) {
 			setFormState({
 				...formState,
 				specieName: value,
 				isButtonDisabled: true,
-				errorMessage: message
+				specieErrorMessage: message
 			})
 		}
 	}
@@ -75,14 +85,14 @@ const W12MForm = () => {
 				...formState,
 				planetName: value,
 				isButtonDisabled: false,
-				errorMessage: ""
+				planetErrorMessage: ""
 			})
 		} catch ({ message }: any) {
 			setFormState({
 				...formState,
 				planetName: value,
 				isButtonDisabled: true,
-				errorMessage: message
+				planetErrorMessage: message
 			})
 		}
 	}
@@ -94,14 +104,14 @@ const W12MForm = () => {
 				...formState,
 				numberOfBeings: value,
 				isButtonDisabled: true,
-				errorMessage: "",
+				beingErrorMessage: "",
 			});
 		} catch ({ message }: any) {
 			setFormState({
 				...formState,
 				numberOfBeings: value,
 				isButtonDisabled: true,
-				errorMessage: message,
+				beingErrorMessage: message,
 			});
 		}
 	}
@@ -121,16 +131,19 @@ const W12MForm = () => {
 				<TextInput
 					label={specieLabel}
 					value={specieName}
+					errorMessage={specieErrorMessage}
 					onChangeInput={handleSpecieName}
 				/>
 				<TextInput
 					label={planetLabel}
 					value={planetName}
+					errorMessage={planetErrorMessage}
 					onChangeInput={handlePlanetName}
 				/>
 				<TextInput
 					label={beingsQtyLabel}
 					value={numberOfBeings}
+					errorMessage={beingErrorMessage}
 					onChangeInput={handleNumberOfBeingField}
 				/>
 				<SelectInput
@@ -146,7 +159,6 @@ const W12MForm = () => {
 					}
 				/>
 				<SubmitButton isDisable={isButtonDisabled} />
-				<ErrorMessage message={errorMessage} />
 			</form>
 		</section>
 	);
