@@ -52,7 +52,7 @@ const fieldStatus: FieldStatus = {
 	numberOfBeingsStatus: true
 }
 
-const labelNames = {
+export const labelNames = {
 	specieLabel: "Specie Name:",
 	planetLabel: "Planet Name:",
 	beingsQtyLabel: "Number of beings:",
@@ -134,7 +134,6 @@ const W12MForm = () => {
 			setMessages({ ...messages, beingErrorMessage: "", })
 			setFieldStatusState({ ...fieldStatusState, numberOfBeingsStatus: false })
 		} catch ({ message }: any) {
-
 			setFormState({
 				...formState,
 				numberOfBeings: value,
