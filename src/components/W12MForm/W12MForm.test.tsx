@@ -4,7 +4,7 @@ import { labelNames } from './W12MForm';
 
 describe("W12Form component", () => {
 
-	it('renders form elements', () => {
+	it('should render all form elements', () => {
 		const { specieLabel, planetLabel, beingsQtyLabel, questionLabel, sparingReasonLabel } = labelNames
 
 		render(<W12MForm />);
