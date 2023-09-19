@@ -1,5 +1,5 @@
 interface SelectInputProps {
-    label?: string;
+    label: string;
     onChangeInput: (value: string) => void;
 }
 
@@ -8,6 +8,7 @@ const SelectInput: React.FC<SelectInputProps> = ({ label, onChangeInput }) => {
         <>
             <label htmlFor="selectInput">{label}</label>
             <input
+                id="selectInput"
                 list="selectInput"
                 type="select"
                 onChange={(e) => onChangeInput(e.target.value)}
