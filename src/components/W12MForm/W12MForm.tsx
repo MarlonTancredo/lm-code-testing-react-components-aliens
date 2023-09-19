@@ -80,7 +80,6 @@ const W12MForm = () => {
 		return isFalseIncluded
 	}
 
-
 	const handleSpecieName = (value: string) => {
 		try {
 			checkSpecieNameField(value)

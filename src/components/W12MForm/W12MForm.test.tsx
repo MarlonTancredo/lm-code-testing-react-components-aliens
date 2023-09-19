@@ -1,11 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import W12MForm from './W12MForm';
 import { labelNames } from './W12MForm';
+const { specieLabel, planetLabel, beingsQtyLabel, questionLabel, sparingReasonLabel } = labelNames
 
 describe("W12Form component", () => {
-
-	const { specieLabel, planetLabel, beingsQtyLabel, questionLabel, sparingReasonLabel } = labelNames
-
 	it('should render specie input element', () => {
 		render(<W12MForm />);
 		const specieInput = screen.queryByLabelText(specieLabel)
