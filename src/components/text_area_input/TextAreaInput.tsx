@@ -1,5 +1,5 @@
 interface TextAreaInputProps {
-    label?: string;
+    label: string;
     onChangeInput: (value: string) => void;
 }
 
